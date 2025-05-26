@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+  influxdb:
+    restart: always
+    image: influxdb:1.8
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+    environment:
+      - 'INFLUXDB_ADMIN_USER=admin'
+      - 'INFLUXDB_ADMIN_PASSWORD=password'
+      - 'INFLUXDB_DB=speedtest'
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8086/ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+  grafana:
+    image: grafana/grafana:latest
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+    environment:
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+    depends_on:
+      influxdb:
+        condition: service_healthy
+  # --- ADD THIS NEW SERVICE FOR SPEEDTEST-MONITOR ---
+  speedtest-monitor:
+    # build: .  # This tells Docker Compose to build the image using the Dockerfile in the current directory
+    image: xshamoh/speedtest-monitor:shafiq01 # IMAGE FROM DOCKER HUB
+    restart: always
+    environment:
+      # If your send_to_influxdb.sh script uses INFLUXDB_HOST, set it here for Docker Compose networking
+      # The 'influxdb' hostname will resolve to the influxdb service within the Docker network
+      INFLUXDB_HOST: influxdb
+      INFLUXDB_PORT: 8086
+      INFLUXDB_DATABASE: speedtest
+      INFLUXDB_USER: admin
+      INFLUXDB_PASSWORD: password
+    depends_on:
+      influxdb:
+        condition: service_healthy # Ensure InfluxDB is ready before starting speedtest-monitor
+
+volumes:
+  influxdb_data:
+  grafana_data:
