@@ -32,19 +32,17 @@ Before you begin, ensure you have the following installed on your machine(s):
 
 ## Project Structure
 
-.
-├── Dockerfile                      # Builds the speedtest-monitor image
-├── docker-compose.yml              # Orchestrates InfluxDB, Grafana, and Speedtest Monitor
-├── entrypoint.sh                   # Entrypoint script for the speedtest-monitor container
-├── send_to_influxdb.sh             # Script to parse SpeedTest output and send to InfluxDB
-├── grafana/
-│   └── provisioning/
-│       ├── datasources/
-│       │   └── influxdb.yml        # Grafana datasource configuration
-│       └── dashboards/
-│           ├── dashboard.yml       # Grafana dashboard provisioning
-│           └── taganaka_speedtest_dashboard.json # The actual Grafana dashboard JSON
-└── .gitignore                      # Specifies files/folders to ignore in Git
+This project contains the following key files and directories:
+
+* `Dockerfile`: Builds the custom `speedtest-monitor` Docker image.
+* `docker-compose.yml`: Orchestrates the InfluxDB, Grafana, and Speedtest Monitor services.
+* `entrypoint.sh`: The entrypoint script for the `speedtest-monitor` container.
+* `send_to_influxdb.sh`: Script to parse SpeedTest output and send data to InfluxDB.
+* `grafana/`: Directory containing Grafana provisioning files.
+    * `grafana/provisioning/datasources/influxdb.yml`: Configures the InfluxDB data source in Grafana.
+    * `grafana/provisioning/dashboards/dashboard.yml`: Provisions the custom dashboard in Grafana.
+    * `grafana/provisioning/dashboards/taganaka_speedtest_dashboard.json`: The JSON definition of the Grafana dashboard.
+* `.gitignore`: Specifies files/folders that Git should ignore.
 
 ## Getting Started
 
@@ -154,5 +152,3 @@ Once all services are up and running (this might take a few minutes for InfluxDB
 
 * **Modify Taganaka SpeedTest:** If you wish to use a modified version of Taganaka SpeedTest, change the `RUN git clone ...` line in the `Dockerfile` to `COPY SpeedTest/ .` and place your modified source in a `SpeedTest/` subdirectory. Remember to rebuild and push your image.
 * **Grafana Dashboard:** You can customize the `taganaka_speedtest_dashboard.json` file to change how data is visualized. Changes will be applied on container restart due to provisioning.
-
----
