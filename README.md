@@ -52,7 +52,7 @@ Perform these steps on your development machine to build your custom Speedtest M
 
 1.  **Clone this repository:**
     ```bash
-    git clone [https://github.com/xshamoh/docker-speedtest-monitor.git](https://github.com/xshamoh/docker-speedtest-monitor.git)
+    git clone https://github.com/xshamoh/docker-speedtest-monitor.git
     cd <your_project_directory> # e.g., cd C:\Users\shafiq01\Desktop\docker
     ```
 2.  **Build the `speedtest-monitor` Docker image:**
@@ -103,7 +103,7 @@ Once your custom `speedtest-monitor` image is pushed to Docker Hub and your `doc
     ```
 3.  **Clone your Git repository:**
     ```bash
-    git clone [https://github.com/xshamoh/docker-speedtest-monitor.git](https://github.com/xshamoh/docker-speedtest-monitor.git)
+    git clone https://github.com/xshamoh/docker-speedtest-monitor.git
     cd <your_project_directory> # e.g., cd C:\Users\shafiq01\Desktop\docker
     ```
 4.  **Start the services:**
