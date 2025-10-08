@@ -1,3 +1,4 @@
+Very much WIP and very much PoC 
 # Dockerized Speedtest Monitor
 
 This project provides a self-contained Docker Compose setup to regularly test your internet speed using Taganaka SpeedTest, store the results in InfluxDB, and visualize them in Grafana.
